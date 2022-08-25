@@ -1,0 +1,7 @@
+name: Vote next map
+displayName: Vote next map
+author: >;;;>Fish
+description: "Adds command for players to vote on the next map."
+version: 1.0
+minGameVersion: 136
+hidden: true
