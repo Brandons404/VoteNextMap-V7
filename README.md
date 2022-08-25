@@ -10,6 +10,7 @@ Simply download the zip file, pull the folder inside of it out, and put it into 
 ## Usage
 
 `/maps` will show a list of (custom) maps on the server
+
 `/nextmap <map number>` will vote for specified map
 
 after the first player votes, a 5 minute timer is started. After the timer runs out, the votes for each map are counted and the map with the most votes will be selected next.
