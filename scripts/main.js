@@ -121,9 +121,6 @@ Events.on(ServerLoadEvent, (e) => {
       );
       const maps = Vars.maps.customMaps().toArray();
       const mapNames = ['[blue]Available maps:', '_________________________ \n'];
-      // Vars.maps
-      //   .customMaps()
-      //   .forEach((mapl) => maps.push('[white]' + ind + ' - [yellow]' + mapl.name()));
       for (let i = 0; i < maps.length; i++) {
         mapNames.push('[white]' + i + ' - [yellow]' + maps[i].name());
       }
@@ -151,7 +148,7 @@ Events.on(ServerLoadEvent, (e) => {
         alreadyVoted.push(pid);
         startVoteTimer();
         Call.sendMessage(
-          '[cyan]Map Vote: ' +
+          '[cyan]Next Map Vote: ' +
             realP.name +
             ' [cyan]Started a map vote, and voted for[yellow] ' +
             votes[map].name +
@@ -173,7 +170,7 @@ Events.on(ServerLoadEvent, (e) => {
       alreadyVoted.push(pid);
       votes[map].total += 1;
       Call.sendMessage(
-        '[cyan]Map Vote: ' +
+        '[cyan]Next Map Vote: ' +
           realP.name +
           ' [cyan]voted for[yellow] ' +
           votes[map].name +
