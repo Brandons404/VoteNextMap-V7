@@ -35,7 +35,7 @@ Simply download the zip file, pull the folder inside of it out, and put it into 
 ## Server Commands
 `votechangesmap <true/false>` will set whether a vote changes the map after. *This saves between server restarts*
 
-After the first player votes, a 3 minute timer is started. After the timer runs out, the votes for each map are counted and the map with the most votes will be selected next.
+After the first player votes, a 1.5 minute timer is started. After the timer runs out, the votes for each map are counted and the map with the most votes will be selected next.
 
 If there is a tie in votes, it will pick randomly from the winners.
 
