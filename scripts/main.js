@@ -5,7 +5,8 @@ let votes = {};
 let voteOngoing = false;
 let alreadyVoted = [];
 let voteStartTime = 0;
-const voteTime = 3 * 60000; // 3 mins
+const voteTime = 1.5 * 60000; // 1.5 mins
+let voteChangesMap = false;
 let serverCommands;
 
 const resetVotes = () => {
@@ -62,6 +63,10 @@ const startVoteTimer = () => {
       );
       serverCommands.handleMessage('nextmap ' + winner.name.split(' ').join('_'));
       resetVotes();
+      if (voteChangesMap) {
+        Call.sendMessage('[green]Changing map.');
+        Events.fire(new GameOverEvent(Team.crux));
+      }
       return;
     }
 
@@ -74,6 +79,10 @@ const startVoteTimer = () => {
     );
     serverCommands.handleMessage('nextmap ' + votes[highestVotedMap[0]].name.split(' ').join('_'));
     resetVotes();
+    if (voteChangesMap) {
+      Call.sendMessage('[green]Changing map.');
+      Events.fire(new GameOverEvent(Team.crux));
+    }
     return;
   }, voteTime / 1000);
 };
@@ -108,6 +117,12 @@ Events.on(ServerLoadEvent, (e) => {
     (l) => l instanceof Packages.mindustry.server.ServerControl
   ).handler;
   const runner = (method) => new Packages.arc.util.CommandHandler.CommandRunner({ accept: method });
+
+  const voteChangesMapSaved = Core.settings.get('vnm', '');
+
+  if (voteChangesMapSaved !== '') {
+    voteChangesMap = voteChangesMapSaved === 'true' ? true : false;
+  }
 
   resetVotes();
 
@@ -178,6 +193,24 @@ Events.on(ServerLoadEvent, (e) => {
           getTimeLeft()
       );
       showVotes();
+    })
+  );
+
+  // voteChangesMap
+  serverCommands.register(
+    'votechangesmap',
+    '<true/false>',
+    'set whether a map vote changes the map.',
+    runner((args) => {
+      if (['true', 'false'].includes(args[0])) {
+        voteChangesMap = args[0] === 'true' ? true : false;
+        Core.settings.put('vnm', args[0]);
+        Core.settings.manualSave();
+        Log.info('Vote changes map set to: ' + args[0]);
+        return;
+      } else {
+        Log.info('"' + args[0] + '"' + ' was not recognized. Please use "true" or "false".');
+      }
     })
   );
 });
